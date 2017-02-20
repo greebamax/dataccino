@@ -1,0 +1,14 @@
+{
+  "name": "ag-mock",
+  "version": "0.0.1",
+  "private": true,
+  "description": "AG mock server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node mock.js"
+  },
+  "devDependencies": {
+    "chance": "^1.0.3",
+    "nock": "^8.0.0"
+  }
+}
