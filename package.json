@@ -9,6 +9,6 @@
   },
   "devDependencies": {
     "chance": "^1.0.3",
-    "nock": "^8.0.0"
+    "nock": "^9.0.13"
   }
 }
