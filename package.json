@@ -1,14 +1,14 @@
 {
-  "name": "ag-mock",
+  "name": "dataccino",
   "version": "0.0.1",
   "private": true,
-  "description": "AG mock server",
+  "description": "Yet another simple mock server",
   "main": "index.js",
-  "scripts": {
-    "start": "node mock.js"
-  },
-  "devDependencies": {
-    "chance": "^1.0.3",
-    "nock": "^9.0.13"
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chance": "^1.0.11",
+    "cors": "^2.8.4",
+    "express": "^4.16.1",
+    "util": "^0.10.3"
   }
 }
