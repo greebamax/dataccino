@@ -7,7 +7,14 @@ const logger = require('./middlewares/logger');
 const log = require('./utils/log');
 
 module.exports = (options = {}) => {
-  if (!options.routes) throw new Error('[ ag-mock-server ] Routes should be provided');
+  if (!options.routes) {
+    log.error(
+      log.getMark(),
+      'Routes should be provided'
+    );
+
+    process.exit(); // eslint-disable-line
+  }
 
   const appRoutes = require(options.routes);
   const app = express();
@@ -30,6 +37,9 @@ module.exports = (options = {}) => {
 
   // init server
   http.createServer(app).listen(port, () => {
-    log.info('[ ag-mock-server ] Development server is established on %s.', port);
+    log.info(
+      log.getMark(),
+      `Development server is established on http://localhost:${port}`
+    );
   });
 };
