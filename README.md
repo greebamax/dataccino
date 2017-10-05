@@ -35,7 +35,7 @@ const routes = require('routes.js');
 
 // start mock server
 server({
-  routes,
+  routes, // you can specify absolute path to file, it will be required by package
   port: 8888, // specify port
   // any other options which will be passed to the app and can be used in handlers
 })
