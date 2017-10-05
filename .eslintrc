@@ -27,5 +27,8 @@
     "no-console": [
       "warn"
     ]
+  },
+  "globals": {
+    "__dirname": true
   }
 }
