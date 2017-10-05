@@ -29,6 +29,7 @@
     ]
   },
   "globals": {
-    "__dirname": true
+    "__dirname": true,
+    "setTimeout": true
   }
 }
