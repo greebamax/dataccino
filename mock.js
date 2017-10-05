@@ -1,22 +1,27 @@
-const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const express = require('express');
 const http = require('http');
-const delay = require('./middlewares/delay');
-const logger = require('./middlewares/logger');
 const log = require('./utils/log');
+const file = require('fs');
+
+const logger = require('./middlewares/logger');
+const delay = require('./middlewares/delay');
+
+/**
+ * @param {String} msg
+ */
+const throwAnError = msg => {
+  log.error(log.getMark(), msg);
+
+  process.exit(1);
+};
 
 module.exports = (options = {}) => {
   if (!options.routes) {
-    log.error(
-      log.getMark(),
-      'Routes should be provided'
-    );
-
-    process.exit(); // eslint-disable-line
+    throwAnError('Routes should be provided');
   }
 
-  const appRoutes = require(options.routes);
   const app = express();
 
   app.use(cors());
@@ -28,10 +33,28 @@ module.exports = (options = {}) => {
   app.all('*', logger);
   app.all('*', delay);
 
-  // register additional routes
-  if (options.routes) {
-    appRoutes(app, options);
+  let appRoutes;
+
+  switch (typeof options.routes) {
+    case 'string':
+      if (!file.existsSync(options.routes)) {
+        throwAnError('The file containing an additional routs should exist');
+      }
+
+      appRoutes = require(options.routes);
+
+      break;
+
+    case 'function':
+      appRoutes = options.routes;
+      break;
+
+    default:
+      throwAnError('Routes should be a string path to file or function representing module exports');
   }
+
+  // register additional routes
+  appRoutes(app, options);
 
   const port = options.port || 1234;
 
@@ -39,7 +62,7 @@ module.exports = (options = {}) => {
   http.createServer(app).listen(port, () => {
     log.info(
       log.getMark(),
-      `Development server is established on http://localhost:${port}`
+      `Server is established on http://localhost:${port}`
     );
   });
 };
