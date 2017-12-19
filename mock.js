@@ -38,7 +38,7 @@ module.exports = (options = {}) => {
   switch (typeof options.routes) {
     case 'string':
       if (!file.existsSync(options.routes)) {
-        throwAnError('The file containing an additional routs should exist');
+        throwAnError('The file containing an additional routes should exist');
       }
 
       appRoutes = require(options.routes);
