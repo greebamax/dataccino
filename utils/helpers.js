@@ -27,7 +27,7 @@ module.exports = {
    * @param {Function} generator Function which generates some data
    * @returns {Array}
    */
-  generate: (length, generator) => new Array(...new Array(length)).map(generator),
+  generate: (length, generator) => new Array(length).fill().map(generator),
 
   /**
    * Capitalize given string
