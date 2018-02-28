@@ -31,5 +31,6 @@ function logMessage(level, msg, ...rest) {
 const logger = getLogger();
 
 module.exports = Object.assign(logger, {
-  getMark: mark => styles`{white [}{green ${mark || 'mock-server'}}{white ]}`
+  getMark: mark => styles`{white [}{green ${mark || 'mock-server'}}{white ]}`,
+  styles,
 });

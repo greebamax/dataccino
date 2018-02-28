@@ -2,13 +2,12 @@
  * Logger middleware
  */
 const log = require('../utils/log');
-const colors = require('chalk');
 
 module.exports = (request, response, next) => {
   log.info(
     log.getMark(),
-    colors`{yellow Handle route:}`,
-    colors`{magenta ${request.headers.host}${request.url}}`
+    log.styles`{yellow Handle route:}`,
+    log.styles`{magenta ${request.headers.host}${request.url}}`
   );
   next();
 };
