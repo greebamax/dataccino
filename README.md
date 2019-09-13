@@ -1,6 +1,6 @@
 ### A simple mock server powered by [Express.js](https://github.com/expressjs)
 ***
-### Basic Usage
+#### Basic Usage
 
 Specify route to handle requests:
 ```js
@@ -21,7 +21,7 @@ module.exports = (app, options) => {
     res.json({
       statusCode: 200,
       response: {
-        Helpers.generate(10, chance.word.bind(chance, { syllables: 3 }));
+        someSentence: Helpers.generate(10, chance.word.bind(chance, { syllables: 3 }));
       }
     });
   });
@@ -31,7 +31,7 @@ module.exports = (app, options) => {
 Combine route handlers:
 ```js
 /**
- * @file:handlers.js
+ * @file:routes.js
  */
 const someRouteHandler = require('path/to/route-handler'); // see above
 
@@ -42,13 +42,23 @@ module.exports = (app, options) => {
 
 And pass handlers as a parameter to the mock server:
 ```js
-const { server } = require('dataccino');
-const routes = require('routes.js');
+/**
+ * @file:mock-server.js
+ */
+const { server: mockServer } = require('dataccino');
+const routes = require('routes');
 
 // start mock server
-server({
-  routes: require('handlers'), // you can specify absolute path to file, it will be required by package
+mockServer({
+  routes: routes, // provide route handlers
   port: 8888, // specify port
-  // any other options which will be passed to the app and can be used in handlers
-})
+  // any other options could be added here and might be used within handlers
+});
+```
+
+Specify npm:start script
+```json
+"scripts": {
+  "start": "node ./path/to/mock-server.js"
+}
 ```
