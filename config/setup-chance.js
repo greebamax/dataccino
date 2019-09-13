@@ -29,44 +29,53 @@ module.exports = chance.mixin({
    * @returns {String}
    */
   stringByFormat({ format, words, separator }) {
+    const FORMAT = {
+      CAMEL: 'CAMEL',
+      CONSTANT: 'CONSTANT',
+      DOT: 'DOT',
+      KEBAB: 'KEBAB',
+      PASCAL: 'PASCAL',
+      SNAKE: 'SNAKE',
+      UPPER: 'UPPER'
+    };
     const length = words || chance.natural({ min: 3, max: 5 });
     const wordsArray = chance.n(chance.word, length);
 
     if (!separator) {
-      separator = { // eslint-disable-line no-param-reassign
-        camel: '',
-        constant: '_',
-        dot: '.',
-        kebab: '-',
-        pascal: '',
-        snake: '_',
-        upper: ' ',
+      separator = {
+        [FORMAT.CAMEL]: '',
+        [FORMAT.CONSTANT]: '_',
+        [FORMAT.DOT]: '.',
+        [FORMAT.KEBAB]: '-',
+        [FORMAT.PASCAL]: '',
+        [FORMAT.SNAKE]: '_',
+        [FORMAT.UPPER]: ' '
       }[format];
     }
 
     const formatter = {
-      camel: Helpers.capitalize,
-      constant: Helpers.toLower,
-      dot: Helpers.toLower,
-      kebab: Helpers.toLower,
-      pascal: Helpers.capitalize,
-      snake: Helpers.toLower,
-      upper: Helpers.toUpper,
+      [FORMAT.CAMEL]: Helpers.capitalize,
+      [FORMAT.CONSTANT]: Helpers.toLower,
+      [FORMAT.DOT]: Helpers.toLower,
+      [FORMAT.KEBAB]: Helpers.toLower,
+      [FORMAT.PASCAL]: Helpers.capitalize,
+      [FORMAT.SNAKE]: Helpers.toLower,
+      [FORMAT.UPPER]: Helpers.toUpper,
     }[format];
 
     const result = wordsArray.map(formatter).join(separator);
 
     switch (format) {
-      case 'camel': {
+      case FORMAT.CAMEL: {
         return result.replace(/^\w/, s => s.toLowerCase());
       }
 
-      case 'constant':
-      case 'dot':
-      case 'kebab':
-      case 'pascal':
-      case 'upper':
-      case 'snake':
+      case FORMAT.CONSTANT:
+      case FORMAT.DOT:
+      case FORMAT.KEBAB:
+      case FORMAT.PASCAL:
+      case FORMAT.SNAKE:
+      case FORMAT.UPPER:
       default: {
         return result;
       }
